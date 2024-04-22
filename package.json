@@ -1,7 +1,7 @@
 {
   "name": "@utsavvan/react-tablegenerator",
   "private": false,
-  "version": "0.0.2",
+  "version": "0.0.4",
   "type": "module",
   "module": "dist/react-tablegenerator.js",
   "main": "dist/react-tablegenerator.umd.cjs",
@@ -15,7 +15,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "publish": "npm publish --access public"
   },
   "dependencies": {
     "react": "^18.2.0",

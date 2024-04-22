@@ -31,7 +31,7 @@ export function TableGenerator({
   const { limit } = paginationObj;
 
   const [headerData, setHeaderData] = useState([]);
-  const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState(null);
   const [additionalData, setAdditionalData] = useState(null);
 
   const table = useRef();
@@ -40,7 +40,7 @@ export function TableGenerator({
 
   useEffect(() => {
     debounce(setHasMorePages(true), 300);
-    setTableData([]);
+    setTableData(null);
     setAdditionalData(null);
     resetPagination();
   }, [filters]);
@@ -168,7 +168,7 @@ export function TableGenerator({
             </tr>
           </thead>
           <tbody className="bg-white divide-y-2 divide-gray-50 ">
-            {tableData?.length !== 0 ? (
+            {tableData && tableData?.length !== 0 ? (
               tableData.map((rowData, index) => {
                 return (
                   <tr
@@ -201,7 +201,7 @@ export function TableGenerator({
                 <LoadingPage />
               </>
             ) : (
-              <NoRecord />
+              tableData?.length === 0 && <NoRecord />
             )}
           </tbody>
         </table>
@@ -225,7 +225,7 @@ TableGenerator.propTypes = {
   fetchResults: PropTypes.object.isRequired,
   tableSchema: PropTypes.object.isRequired,
   filters: PropTypes.object.isRequired,
-  setFilters: PropTypes.object.isRequired,
+  setFilters: PropTypes.func.isRequired,
   customStyles: PropTypes.object,
   customeClass: PropTypes.object,
 };

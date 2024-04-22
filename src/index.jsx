@@ -84,7 +84,7 @@ export function TableGenerator({
         if (updateApiData) {
           setHeaderData(updateApiData?.header);
           setTableData((prev) => {
-            let updatedData = [...prev, ...(updateApiData?.body ?? [])];
+            let updatedData = [...(prev ?? []), ...(updateApiData?.body ?? [])];
             return updatedData;
           });
         }

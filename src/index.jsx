@@ -155,13 +155,17 @@ export function TableGenerator({
                         <th
                           scope="col"
                           key={column.accessor}
-                          className={`py-2 px-3 text-center text-xs font-semibold text-gray-900 ${
+                          className={`pb-2 px-3 text-center text-xs font-semibold text-gray-900 ${
                             column.accessor
-                          } ${column?.class ? column.class : ""} header`}
+                          } ${
+                            column?.class ? column.class : ""
+                          } header filter-class`}
                         >
                           {column.filterHTML}
                         </th>
-                      ) : null}
+                      ) : (
+                        <th className=""></th>
+                      )}
                     </>
                   );
                 })}

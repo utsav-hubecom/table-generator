@@ -28,7 +28,7 @@ export function useFetchGQL(fetchQuery, limit, filters) {
     isError: error,
     apiResponse: {
       data: items ?? [],
-      additionalData: {
+      additionalInfo: {
         totalDocuments: itemCount,
         currentPage,
       },

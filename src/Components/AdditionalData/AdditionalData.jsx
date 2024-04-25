@@ -45,9 +45,7 @@ export default function AdditionalData({ additionalData, higherValue }) {
           </div>
         )
       ) : (
-        <>
-          <LoadingPage />
-        </>
+        <></>
       )}
     </>
   );

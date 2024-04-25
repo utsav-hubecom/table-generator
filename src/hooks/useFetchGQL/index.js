@@ -29,7 +29,7 @@ export function useFetchGQL(fetchQuery, limit, filters) {
     apiResponse: {
       data: items ?? [],
       additionalInfo: {
-        totalDocuments: itemCount,
+        totalPages: itemCount,
         currentPage,
       },
     },

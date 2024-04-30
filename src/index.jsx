@@ -20,7 +20,8 @@ export function TableGenerator({
     borderBottom: "2px solid #f7f7f7",
   },
   headerClasses = "",
-  customeClass = "divide-x-2 divide-gray-50",
+  customeClassTr1 = "divide-x-2 divide-gray-50",
+  customeClassTr2 = "divide-x-2 divide-gray-50",
   customeClassTbodyTr = "",
   alternateTr=""
 }) {
@@ -136,7 +137,7 @@ export function TableGenerator({
             className={`sticky top-0 z-30  ${headerClasses}`}
             style={customStyles}
           >
-            <tr className={`text-gray-900 font-semibold ${customeClass} `}>
+            <tr className={`text-gray-900 font-semibold ${customeClassTr1} `}>
               {headerData?.length !== 0 &&
                 headerData?.map((column) => {
                   return (
@@ -156,7 +157,7 @@ export function TableGenerator({
                   );
                 })}
             </tr>
-            <tr className={`text-gray-900 ${customeClass} `}>
+            <tr className={`text-gray-900 ${customeClassTr2} `}>
               {headerData?.length !== 0 &&
                 headerData?.map((column) => {
                   return (
@@ -238,7 +239,8 @@ TableGenerator.propTypes = {
   filters: PropTypes.object.isRequired,
   setFilters: PropTypes.func.isRequired,
   customStyles: PropTypes.object,
-  customeClass: PropTypes.object,
+  customeClassTr1: PropTypes.object,
+  customeClassTr2: PropTypes.object,
   customeClassTbodyTr: PropTypes.object,
   alternateTr: PropTypes.object,
   headerClasses: PropTypes.string,

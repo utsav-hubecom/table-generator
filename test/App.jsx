@@ -68,7 +68,7 @@ async function dummyFetch() {
 
 let dummySChema = {
   id: {
-    Header: "Id",
+    headerLabel: "Id",
     headerReflact: (value) => {
       return <p>{value}</p>;
     },
@@ -77,7 +77,7 @@ let dummySChema = {
     },
   },
   name: {
-    Header: "Name",
+    headerLabel: "Name",
     headerReflact: (value) => {
       return <p>{value}</p>;
     },

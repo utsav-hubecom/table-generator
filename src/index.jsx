@@ -7,17 +7,23 @@ import { debounce } from "@Config/helperFunctions.js";
 import NoRecord from "@Components/NoRecord/NoRecord.jsx";
 import AdditionalData from "@Components/AdditionalData/AdditionalData.jsx";
 import LoadingPage from "@Components/LoadingPage/LoadingPage.jsx";
+import "./index.css";
 
 export function TableGenerator({
   fetchResults,
   tableSchema,
   filters = {},
   setFilters = () => {},
+  
   customStyles = {
     backgroundColor: "white",
     borderBottom: "2px solid #f7f7f7",
   },
-  customeClass = "divide-x-2 divide-gray-50",
+  headerClasses = "",
+  customeClassTr1 = "divide-x-2 divide-gray-50",
+  customeClassTr2 = "divide-x-2 divide-gray-50",
+  customeClassTbodyTr = "",
+  alternateTr=""
 }) {
   const {
     isLoading,
@@ -121,14 +127,17 @@ export function TableGenerator({
   return (
     <>
       <div
-        className="relative w-full  overflow-auto scroll_bar1 "
+        className="relative w-full overflow-auto scroll_bar1 table-generator-div"
         ref={table}
         id="dashboard_table"
         style={{ minHeight: "70vh", maxHeight: "70vh" }}
       >
-        <table className="min-w-full table-fixed">
-          <thead className={`sticky top-0 z-30 `} style={customStyles}>
-            <tr className={` ${customeClass} `}>
+        <table className="min-w-full table-fixed table-generator-table">
+          <thead
+            className={`sticky top-0 z-30  ${headerClasses}`}
+            style={customStyles}
+          >
+            <tr className={`text-gray-900 font-semibold ${customeClassTr1} `}>
               {headerData?.length !== 0 &&
                 headerData?.map((column) => {
                   return (
@@ -136,9 +145,11 @@ export function TableGenerator({
                       <th
                         scope="col"
                         key={column.accessor}
-                        className={`py-2 px-3 text-center text-xs font-semibold text-gray-900 ${
+                        className={`py-2 px-3 text-center text-xs ${
                           column.accessor
-                        } ${column?.class ? column.class : ""} header`}
+                        } ${
+                          column?.class ? column.class : ""
+                        } header table-generator-th`}
                       >
                         {column.HTML || "Error occurred"}
                       </th>
@@ -146,7 +157,7 @@ export function TableGenerator({
                   );
                 })}
             </tr>
-            <tr className={` ${customeClass} `}>
+            <tr className={`text-gray-900 ${customeClassTr2} `}>
               {headerData?.length !== 0 &&
                 headerData?.map((column) => {
                   return (
@@ -155,11 +166,11 @@ export function TableGenerator({
                         <th
                           scope="col"
                           key={column.accessor}
-                          className={`pb-2 px-3 text-center text-xs font-semibold text-gray-900 ${
+                          className={`pb-2 px-3 text-center text-xs ${
                             column.accessor
                           } ${
                             column?.class ? column.class : ""
-                          } header filter-class`}
+                          } header filter-class `}
                         >
                           {column.filterHTML}
                         </th>
@@ -176,7 +187,7 @@ export function TableGenerator({
               tableData.map((rowData, index) => {
                 return (
                   <tr
-                    className="text-center bg-gray-50/10 hover:bg-gray-100 divide-x-2  divide-zinc-50 group slide-up-animation"
+                    className={`${index % 2 === 0 ? undefined : ` ${alternateTr}`} group slide-up-animation text-center text-xs font-semibold text-gray-600 bg-gray-50/10 hover:bg-gray-100 divide-x-2 divide-zinc-50 table-generator-trbody ${customeClassTbodyTr}`}
                     key={index}
                   >
                     {rowData.map((rowItems, i) => {
@@ -184,13 +195,10 @@ export function TableGenerator({
                         <td
                           className={`${
                             rowItems.accessor || ""
-                          } row  py-1 pr-3  font-bold px-3 text-gray-600  ${
+                          } row  py-1 pr-3  px-3 ${
                             rowItems?.class ? rowItems.class : ""
                           }`}
                           key={`${index}${i}`}
-                          style={{
-                            fontSize: "11px",
-                          }}
                         >
                           <div className=""></div>
                           {rowItems.HTML || "Error occurred"}
@@ -231,5 +239,9 @@ TableGenerator.propTypes = {
   filters: PropTypes.object.isRequired,
   setFilters: PropTypes.func.isRequired,
   customStyles: PropTypes.object,
-  customeClass: PropTypes.object,
+  customeClassTr1: PropTypes.object,
+  customeClassTr2: PropTypes.object,
+  customeClassTbodyTr: PropTypes.object,
+  alternateTr: PropTypes.object,
+  headerClasses: PropTypes.string,
 };

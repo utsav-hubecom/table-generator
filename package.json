@@ -1,7 +1,7 @@
 {
   "name": "@utsavvan/react-tablegenerator",
   "private": false,
-  "version": "0.4.1",
+  "version": "0.4.2",
   "type": "module",
   "module": "dist/react-tablegenerator.js",
   "main": "dist/react-tablegenerator.umd.cjs",

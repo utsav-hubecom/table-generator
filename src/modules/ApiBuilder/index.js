@@ -30,19 +30,20 @@ async function headerBuilder(tableSchema, setFilter) {
             return updatedValue;
           });
         }
+        const tableSchemaAccessor = eval(`tableSchema["${key}"]`) || "Null";
 
         return {
-          Header: tableSchema[key].headerLabel,
+          Header: tableSchemaAccessor.headerLabel,
           accessor: key,
-          HTML: await tableSchema[key].headerReflact(
-            tableSchema[key].headerLabel,
+          HTML: await tableSchemaAccessor.headerReflact(
+            tableSchemaAccessor.headerLabel,
             setFilterValue
           ),
           filterHTML:
-            typeof tableSchema[key]?.filterReflact === "function"
-              ? await tableSchema[key]?.filterReflact(setFilterValue)
+            typeof tableSchemaAccessor?.filterReflact === "function"
+              ? await tableSchemaAccessor?.filterReflact(setFilterValue)
               : null,
-          ...tableSchema[key]?.headerUtils,
+          ...tableSchemaAccessor?.headerUtils,
         };
       })
     );
@@ -61,13 +62,13 @@ async function bodyBuilder(data, tableSchema) {
           Object.keys(tableSchema).map(async (key) => {
             let curSchemaValue = tableSchema[key];
 
-            let currentValue = dataObject[key] || "Null";
+            let currentValue = eval(`dataObject.${key}`) || "Null";
 
             return {
               value: currentValue,
               accessor: key,
-              HTML: await curSchemaValue.dataValueReflact(
-                dataObject[key],
+              HTML: await curSchemaValue?.dataValueReflact(
+                currentValue,
                 dataObject
               ),
               ...curSchemaValue?.dataUtils,

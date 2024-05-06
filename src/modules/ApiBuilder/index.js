@@ -1,3 +1,5 @@
+import { safeAccess } from "@Config/helperFunctions";
+
 export default async function ApiBuilder(data, tableSchema, setFilter) {
   try {
     const transformedHeaderData = await headerBuilder(tableSchema, setFilter);
@@ -62,7 +64,7 @@ async function bodyBuilder(data, tableSchema) {
           Object.keys(tableSchema).map(async (key) => {
             let curSchemaValue = tableSchema[key];
 
-            let currentValue = eval(`dataObject.${key}`) || "";
+            let currentValue = safeAccess(dataObject, key) || "";
 
             return {
               value: currentValue,

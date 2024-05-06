@@ -7,3 +7,7 @@ export const debounce = (func, delay) => {
     }, delay);
   };
 };
+
+export function safeAccess(obj, path) {
+  return path.split(".").reduce((acc, part) => acc && acc[part], obj);
+}

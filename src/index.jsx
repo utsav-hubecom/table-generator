@@ -14,7 +14,7 @@ export function TableGenerator({
   tableSchema,
   filters = {},
   setFilters = () => {},
-  
+
   customStyles = {
     backgroundColor: "white",
     borderBottom: "2px solid #f7f7f7",
@@ -23,7 +23,7 @@ export function TableGenerator({
   customeClassTr1 = "divide-x-2 divide-gray-50",
   customeClassTr2 = "divide-x-2 divide-gray-50",
   customeClassTbodyTr = "",
-  alternateTr=""
+  alternateTr = "",
 }) {
   const {
     isLoading,
@@ -78,7 +78,7 @@ export function TableGenerator({
 
   useEffect(() => {
     const fetchData = async () => {
-      if (apiResponse && !isLoading && !isError && hasMorePages) {
+      if (apiResponse && !isLoading && !isError) {
         const { totalPages, currentPage } = apiResponse?.additionalInfo ?? {};
 
         let updateApiData = await ApiBuilder(
@@ -187,7 +187,9 @@ export function TableGenerator({
               tableData.map((rowData, index) => {
                 return (
                   <tr
-                    className={`${index % 2 === 0 ? undefined : ` ${alternateTr}`} group slide-up-animation text-center text-xs font-semibold text-gray-600 bg-gray-50/10 hover:bg-gray-100 divide-x-2 divide-zinc-50 table-generator-trbody ${customeClassTbodyTr}`}
+                    className={`${
+                      index % 2 === 0 ? undefined : ` ${alternateTr}`
+                    } group slide-up-animation text-center text-xs font-semibold text-gray-600 bg-gray-50/10 hover:bg-gray-100 divide-x-2 divide-zinc-50 table-generator-trbody ${customeClassTbodyTr}`}
                     key={index}
                   >
                     {rowData.map((rowItems, i) => {

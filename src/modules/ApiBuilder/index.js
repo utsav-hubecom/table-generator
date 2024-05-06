@@ -62,7 +62,7 @@ async function bodyBuilder(data, tableSchema) {
           Object.keys(tableSchema).map(async (key) => {
             let curSchemaValue = tableSchema[key];
 
-            let currentValue = eval(`dataObject.${key}`) || "Null";
+            let currentValue = eval(`dataObject.${key}`) || "";
 
             return {
               value: currentValue,

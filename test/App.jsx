@@ -7,7 +7,7 @@ const data = [
     id: "1",
     type: { first: "45", second: "56" },
   },
-  { name: "Michael Johnson", id: "2", type: { first: "45", second: "56" } },
+  { name: "Michael Johnson", id: "2", type: { first: null, second: "56" } },
   { name: "Robert Williams", id: "3", type: { first: "45", second: "56" } },
   { name: "Maria Garcia", id: "4", type: { first: "45", second: "56" } },
   { name: "David Jones", id: "5", type: { first: "45", second: "56" } },

@@ -32,7 +32,7 @@ async function headerBuilder(tableSchema, setFilter) {
             return updatedValue;
           });
         }
-        const tableSchemaAccessor = eval(`tableSchema["${key}"]`) || "Null";
+        const tableSchemaAccessor = safeAccess(tableSchema, key) || "Null";
 
         return {
           Header: tableSchemaAccessor.headerLabel,

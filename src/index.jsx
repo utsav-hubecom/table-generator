@@ -43,8 +43,8 @@ export function TableGenerator({
   const [headerData, setHeaderData] = useState([]);
   const [tableData, setTableData] = useState(null);
 
-  const [extendedHeaderData, setExtendedHeaderData] = useState([]);
-  const [extendedTableData, setExtendedTableData] = useState(null);
+  const [extendedHeaderDataObj, setExtendedHeaderDataObj] = useState({});
+  const [extendedTableDataObj, setExtendedTableDataObj] = useState({});
 
   const [expandedRows, setExpandedRows] = useState([]);
 
@@ -125,20 +125,34 @@ export function TableGenerator({
     }
   }, [apiResponse]);
 
-  const handleRowClick = async (id) => {
-    console.log("🚀 ~ handleRowClick ~ id:", id);
-    // const extendeUpdatedApiData = await ApiBuilder(
-    //   extendedRowData,
-    //   extendedSchema,
-    //   setFilters
-    // );
+  const handleRowClick = async (key) => {
+    const dataFromkey = apiResponse?.data?.find((data) => {
+      if (data[accessorKey] === key) {
+        return true;
+      }
+    });
+
+    const extendeUpdatedApiData = await ApiBuilder(
+      dataFromkey[extendedDataKey],
+      extendedSchema,
+      setFilters
+    );
+
+    if (extendeUpdatedApiData) {
+      setExtendedHeaderDataObj((prevState) => {
+        return { ...prevState, [key]: extendeUpdatedApiData?.header };
+      });
+      setExtendedTableDataObj((prevState) => {
+        return { ...prevState, [key]: extendeUpdatedApiData?.body };
+      });
+    }
 
     const currentExpandedRows = expandedRows;
-    const isRowExpanded = currentExpandedRows.includes(id);
+    const isRowExpanded = currentExpandedRows.includes(key);
 
     const newExpandedRows = isRowExpanded
-      ? currentExpandedRows.filter((rowId) => rowId !== id)
-      : currentExpandedRows.concat(id);
+      ? currentExpandedRows.filter((rowKey) => rowKey !== key)
+      : currentExpandedRows.concat(key);
 
     setExpandedRows(newExpandedRows);
   };
@@ -219,9 +233,17 @@ export function TableGenerator({
                   }
                 });
 
-                const extendedAccessorValue = accessorObj.value;
+                const extendedAccessorValue = accessorObj?.value;
 
-                const isRowExpanded = expandedRows.includes(extendedItem);
+                const isRowExpanded = expandedRows.includes(
+                  extendedAccessorValue
+                );
+
+                const extendedTableData =
+                  extendedTableDataObj[extendedAccessorValue];
+
+                const extendedHeaderData =
+                  extendedHeaderDataObj[extendedAccessorValue];
 
                 return (
                   <>
@@ -230,7 +252,10 @@ export function TableGenerator({
                         index % 2 === 0 ? undefined : ` ${alternateTr}`
                       } group slide-up-animation text-center text-xs font-semibold text-gray-600 bg-gray-50/10 hover:bg-gray-100 divide-x-2 divide-zinc-50 table-generator-trbody ${customeClassTbodyTr}`}
                       key={index}
-                      onClick={() => handleRowClick(extendedAccessorValue)}
+                      onClick={() =>
+                        extendedTableSchema &&
+                        handleRowClick(extendedAccessorValue)
+                      }
                     >
                       {rowData.map((rowItems, i) => {
                         return (
@@ -278,33 +303,40 @@ export function TableGenerator({
                           </thead>
 
                           <tbody>
-                            {extendedTableData.map(async (extendedRowData) => {
-                              return (
-                                <>
-                                  <tr className="group slide-up-animation text-center text-xs font-semibold text-gray-600 bg-gray-50/10 hover:bg-gray-100 divide-x-2 divide-zinc-50 table-generator-trbody">
-                                    {extendedRowData.map(
-                                      (extendedRowItems, extendedRowIndex) => {
-                                        return (
-                                          <td
-                                            className={`${
-                                              extendedRowItems.accessor || ""
-                                            } row  py-1 pr-3  px-3 ${
-                                              extendedRowItems?.class
-                                                ? extendedRowItems.class
-                                                : ""
-                                            }`}
-                                          >
-                                            <div className=""></div>
-                                            {extendedRowItems.HTML ||
-                                              "Error occurred"}
-                                          </td>
-                                        );
-                                      }
-                                    )}
-                                  </tr>
-                                </>
-                              );
-                            })}
+                            {extendedTableData &&
+                            extendedTableData?.length !== 0
+                              ? extendedTableData.map((extendedRowData) => {
+                                  return (
+                                    <>
+                                      <tr className="group slide-up-animation text-center text-xs font-semibold text-gray-600 bg-gray-50/10 hover:bg-gray-100 divide-x-2 divide-zinc-50 table-generator-trbody">
+                                        {extendedRowData.map(
+                                          (
+                                            extendedRowItems,
+                                            extendedRowIndex
+                                          ) => {
+                                            return (
+                                              <td
+                                                className={`${
+                                                  extendedRowItems.accessor ||
+                                                  ""
+                                                } row  py-1 pr-3  px-3 ${
+                                                  extendedRowItems?.class
+                                                    ? extendedRowItems.class
+                                                    : ""
+                                                }`}
+                                              >
+                                                <div className=""></div>
+                                                {extendedRowItems.HTML ||
+                                                  "Error occurred"}
+                                              </td>
+                                            );
+                                          }
+                                        )}
+                                      </tr>
+                                    </>
+                                  );
+                                })
+                              : null}
                           </tbody>
                         </table>
                       </>
@@ -340,6 +372,7 @@ export function TableGenerator({
 TableGenerator.propTypes = {
   fetchResults: PropTypes.object.isRequired,
   tableSchema: PropTypes.object.isRequired,
+  extendedTableSchema: PropTypes.object,
   filters: PropTypes.object.isRequired,
   setFilters: PropTypes.func.isRequired,
   customStyles: PropTypes.object,

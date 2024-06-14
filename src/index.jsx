@@ -99,8 +99,7 @@ export function TableGenerator({
 
         if (updateApiData) {
           setHeaderData(updateApiData?.header);
-
-          if (tableData?.length > 0 && tableData?.length <= limit) {
+          if (tableData?.length > 0 && tableData?.length < limit) {
             setTableData((prev) => {
               let updatedData = [...(prev ?? []), ...[]];
               return updatedData;

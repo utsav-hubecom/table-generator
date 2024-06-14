@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { TableGenerator, useFetch } from "../index";
+import { TableGenerator, useFetch, useFetchGQL } from "../index";
+
+import { gql } from "@apollo/client";
+
+import { PatientSchema } from "./Schema/schema";
 
 const data = [
   {
@@ -135,6 +139,41 @@ let dummySchema = {
   },
 };
 
+const GET_PATIENTS_QUERY = () => {
+  return gql`
+    query getUsers(
+      $page: Int
+      $perPage: Int
+      $filter: FilterFindManyhighgate_usersInput
+    ) {
+      queryResponse: userPagination(
+        page: $page
+        perPage: $perPage
+        filter: $filter
+      ) {
+        items {
+          _id
+          firstName
+          lastName
+          phoneNo
+          reference
+          status
+          gender
+        }
+        pageInfo {
+          currentPage
+          hasNextPage
+          hasPreviousPage
+          itemCount
+          pageCount
+          perPage
+          __typename
+        }
+      }
+    }
+  `;
+};
+
 let extendedTableSchema = {
   first: {
     headerLabel: "first",
@@ -158,13 +197,13 @@ let extendedTableSchema = {
 
 export default function App() {
   const [filters, setFilters] = useState({});
-  const fetchResult = useFetch(dummyFetch, 30, 0, filters);
+  const fetchResult = useFetchGQL(GET_PATIENTS_QUERY, 30, filters);
 
   return (
     <>
       <TableGenerator
         fetchResults={fetchResult}
-        tableSchema={dummySchema}
+        tableSchema={PatientSchema}
         extendedTableSchema={{
           extendedDataKey: "items",
           accessorKey: "id",

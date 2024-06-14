@@ -99,10 +99,21 @@ export function TableGenerator({
 
         if (updateApiData) {
           setHeaderData(updateApiData?.header);
-          setTableData((prev) => {
-            let updatedData = [...(prev ?? []), ...(updateApiData?.body ?? [])];
-            return updatedData;
-          });
+
+          if (tableData?.length > 0 && tableData?.length <= limit) {
+            setTableData((prev) => {
+              let updatedData = [...(prev ?? []), ...[]];
+              return updatedData;
+            });
+          } else {
+            setTableData((prev) => {
+              let updatedData = [
+                ...(prev ?? []),
+                ...(updateApiData?.body ?? []),
+              ];
+              return updatedData;
+            });
+          }
         }
 
         setAdditionalData(apiResponse?.additionalInfo);

@@ -3,8 +3,6 @@ import { useQuery } from "@apollo/client";
 export function useFetchGQL(fetchQuery, limit, filters) {
   const [page, setPage] = useState(1);
 
-  const queryResponse = fetchQuery();
-
   // const newFilters = filterGenerator(filters);
 
   let {
@@ -12,7 +10,7 @@ export function useFetchGQL(fetchQuery, limit, filters) {
     error,
     data: queryResult,
     refetch,
-  } = useQuery(queryResponse, {
+  } = useQuery(fetchQuery, {
     variables: {
       page,
       perPage: limit,

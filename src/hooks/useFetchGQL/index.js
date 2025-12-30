@@ -3,14 +3,19 @@ import { useQuery } from "@apollo/client";
 export function useFetchGQL(fetchQuery, limit, filters) {
   const [page, setPage] = useState(1);
 
-  // const newFilters = filterGenerator(filters);
+  // Determine the query AST. 
+  // If fetchQuery is a function, call it. Otherwise use it directly.
+  // Note: If fetchQuery depends on page/filters, it might return a different query AST on render? 
+  // Ideally, it should return a static query with variables.
+  // But legacy usage (test/App.jsx) implies it might be a function.
+  const queryAst = typeof fetchQuery === "function" ? fetchQuery(page, limit, filters) : fetchQuery;
 
   let {
     loading,
     error,
     data: queryResult,
     refetch,
-  } = useQuery(fetchQuery, {
+  } = useQuery(queryAst, {
     variables: {
       page,
       perPage: limit,

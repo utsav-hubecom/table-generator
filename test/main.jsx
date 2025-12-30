@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ApolloProvider client={graphqlClient}>
       <App></App>
-      {/* <StaffTable /> */}
+      <StaffTable />
     </ApolloProvider>
   </React.StrictMode>
 );

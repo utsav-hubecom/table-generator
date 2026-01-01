@@ -27,29 +27,29 @@ export interface FetchResults {
 
 export type SetFilterValue = (keyForFilter: string, value?: any) => void;
 
-export interface TableColumnSchema {
+export interface TableColumnSchema<T = any> {
   headerLabel: string;
   headerReflact: (label: string, setFilterValue: SetFilterValue) => ReactNode;
   filterReflact?: (setFilterValue: SetFilterValue) => ReactNode;
-  dataValueReflact: (value: any, rowData: any) => ReactNode;
+  dataValueReflact: (value: any, rowData: T) => ReactNode;
   headerUtils?: Record<string, any>;
   dataUtils?: Record<string, any>;
 }
 
-export interface TableSchema {
-  [key: string]: TableColumnSchema;
+export interface TableSchema<T = any> {
+  [key: string]: TableColumnSchema<T>;
 }
 
-export interface ExtendedTableSchema {
+export interface ExtendedTableSchema<T = any> {
   extendedDataKey: string;
   accessorKey: string;
-  extendedSchema: TableSchema;
+  extendedSchema: TableSchema<T>;
 }
 
-export interface TableGeneratorProps {
+export interface TableGeneratorProps<T = any> {
   fetchResults: FetchResults;
-  tableSchema: TableSchema;
-  extendedTableSchema?: ExtendedTableSchema;
+  tableSchema: TableSchema<T>;
+  extendedTableSchema?: ExtendedTableSchema<T>;
   filters?: Record<string, any>;
   setFilters?: React.Dispatch<React.SetStateAction<Record<string, any>>>;
   customStyles?: React.CSSProperties;

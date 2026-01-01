@@ -12,6 +12,7 @@ export default defineConfig({
     }),
   ],
   resolve: {
+    dedupe: ['react', 'react-dom'],
     alias: {
       '@Components': path.resolve(__dirname, './src/Components'),
       '@Modules': path.resolve(__dirname, './src/Modules'),
@@ -27,7 +28,7 @@ export default defineConfig({
       fileName: (format) => `react-tablegenerator.${format === 'es' ? 'js' : 'cjs'}`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom', '@apollo/client'],
+      external: ['react', 'react-dom', '@apollo/client','react/jsx-runtime'],
       output: {
         globals: {
           react: 'React',

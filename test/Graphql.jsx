@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { gql } from "@apollo/client";
-import { TableGenerator, useFetchGQL } from "../index.js";
+import { TableGenerator, useFetchGQL } from "../src/index.tsx";
 
 const getStaffQuery = (page, limit, filters) => {
   return gql`

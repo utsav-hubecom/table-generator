@@ -1,15 +1,16 @@
 {
   "name": "@utsavvan/react-tablegenerator",
   "private": false,
-  "version": "0.5.1",
+  "version": "0.5.3",
   "type": "module",
   "module": "dist/react-tablegenerator.js",
-  "main": "dist/react-tablegenerator.umd.cjs",
+  "main": "dist/react-tablegenerator.cjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/react-tablegenerator.js",
-      "require": "./dist/react-tablegenerator.umd.cjs"
+      "require": "./dist/react-tablegenerator.cjs"
     }
   },
   "scripts": {
@@ -20,11 +21,12 @@
     "preview": "vite preview",
     "publish": "npm publish --access public"
   },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
   "dependencies": {
-    "@apollo/client": "^3.10.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-infinite-scroll-component": "^6.1.0"
+    "@apollo/client": "^3.10.1"
   },
   "devDependencies": {
     "@types/node": "^25.0.3",

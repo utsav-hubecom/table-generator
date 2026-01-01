@@ -57,8 +57,10 @@ export const TableBody: React.FC<TableBodyProps> = ({
               <tr
                 ref={isLastItem && lastElementRef ? lastElementRef : null}
                 className={`${
-                  index % 2 === 0 ? undefined : ` ${alternateTr}`
-                } group slide-up-animation text-center text-xs font-semibold text-gray-600 bg-gray-50/10 hover:bg-gray-100 divide-x-2 divide-zinc-50 table-generator-trbody ${customClassTbodyTr}`}
+                  index % 2 === 0
+                    ? "bg-white"
+                    : `${alternateTr || "bg-slate-50/30"}`
+                } group transition-all duration-200 hover:bg-sky-50/50 hover:shadow-sm border-b border-gray-100 last:border-b-0 text-center text-sm font-medium text-slate-600 table-generator-trbody ${customClassTbodyTr}`}
                 onClick={() => {
                   if (renderExpandedRow && rowKey) {
                     toggleRow(rowKey);
@@ -67,9 +69,9 @@ export const TableBody: React.FC<TableBodyProps> = ({
               >
                 {rowData.map((cell, i) => (
                   <td
-                    className={`${cell.accessor || ""} row py-1 pr-3 px-3 ${
-                      cell.class || ""
-                    }`}
+                    className={`${
+                      cell.accessor || ""
+                    } row py-3 pr-4 px-4 whitespace-nowrap ${cell.class || ""}`}
                     key={`${index}-${i}`}
                   >
                     <div className=""></div>

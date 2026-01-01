@@ -7,6 +7,7 @@ import { debounce } from "./utils/helpers";
 
 export { useFetch } from "./hooks/useFetch";
 export { useFetchGQL } from "./hooks/useFetchGQL";
+export * from "./types";
 
 // Helper components (assuming they are still JS/JSX)
 import NoRecord from "./Components/NoRecord/NoRecord.jsx";
@@ -205,10 +206,11 @@ export function TableGenerator({
     );
   };
 
-  const higherValue = Math.min(
-    additionalData?.totalDocuments || 0,
-    additionalData ? additionalData.currentPage * limit : 0
-  );
+  const higherValue =
+    Math.min(
+      additionalData?.totalDocuments || 0,
+      additionalData ? additionalData.currentPage * limit : 0
+    ) || 0;
 
   if (isError) {
     return "An error occurred";

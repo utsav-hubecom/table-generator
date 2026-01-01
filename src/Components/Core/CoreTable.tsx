@@ -51,32 +51,36 @@ export const CoreTable: React.FC<CoreTableProps> = ({
 
   return (
     <div
-      className="relative w-full overflow-auto scroll_bar1 table-generator-div"
-      style={{ minHeight: "70vh", maxHeight: "70vh" }}
-      ref={tableContainerRef}
+      className={`relative w-full overflow-hidden rounded-xl bg-white shadow-sm border border-slate-200 ${customClassTbodyTr}`}
     >
-      <table className="min-w-full table-fixed table-generator-table">
-        <TableHeader
-          headers={headers}
-          customStyles={customStyles}
-          headerClasses={headerClasses}
-          customClassTr1={customClassTr1}
-          customClassTr2={customClassTr2}
-        />
-        <TableBody
-          data={data}
-          expandedRows={expandedRows}
-          toggleRow={toggleRow}
-          renderExpandedRow={renderExpandedRow}
-          rowKeyAccessor={rowKeyAccessor}
-          alternateTr={alternateTr}
-          customClassTbodyTr={customClassTbodyTr}
-          isLoading={isLoading}
-          LoadingComponent={LoadingComponent}
-          NoRecordComponent={NoRecordComponent}
-          lastElementRef={lastElementRef}
-        />
-      </table>
+      <div
+        className="w-auto overflow-auto scroll_bar1 table-generator-div"
+        style={{ maxHeight: "70vh", ...customStyles }}
+        ref={tableContainerRef}
+      >
+        <table className="min-w-full table-fixed table-generator-table">
+          <TableHeader
+            headers={headers}
+            customStyles={customStyles}
+            headerClasses={headerClasses}
+            customClassTr1={customClassTr1}
+            customClassTr2={customClassTr2}
+          />
+          <TableBody
+            data={data}
+            expandedRows={expandedRows}
+            toggleRow={toggleRow}
+            renderExpandedRow={renderExpandedRow}
+            rowKeyAccessor={rowKeyAccessor}
+            alternateTr={alternateTr}
+            customClassTbodyTr={customClassTbodyTr}
+            isLoading={isLoading}
+            LoadingComponent={LoadingComponent}
+            NoRecordComponent={NoRecordComponent}
+            lastElementRef={lastElementRef}
+          />
+        </table>
+      </div>
     </div>
   );
 };

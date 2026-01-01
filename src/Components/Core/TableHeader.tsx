@@ -26,29 +26,33 @@ export const TableHeader: React.FC<TableHeaderProps> = ({
 
   return (
     <thead
-      className={`sticky top-0 z-30 ${headerClasses}`}
+      className={`sticky top-0 z-30 bg-slate-50/95 backdrop-blur-sm border-b-2 border-gray-300 shadow-sm ${headerClasses}`}
       style={customStyles}
     >
-      <tr className={`text-gray-900 font-semibold ${customClassTr1}`}>
+      <tr
+        className={`text-slate-700 uppercase tracking-wider font-semibold text-xs ${customClassTr1}`}
+      >
         {headers.map((column) => (
           <th
             scope="col"
             key={column.accessor}
-            className={`py-2 px-3 text-center text-xs ${column.accessor} ${
+            className={`py-4 px-4 text-center whitespace-nowrap ${
+              column.accessor
+            } ${
               column.class || ""
-            } header table-generator-th`}
+            } header table-generator-th transition-colors hover:bg-slate-100/50`}
           >
             {column.HTML || "Error occurred"}
           </th>
         ))}
       </tr>
-      <tr className={`text-gray-900 ${customClassTr2}`}>
+      <tr className={`bg-white text-gray-900 ${customClassTr2}`}>
         {headers.map((column) => (
           <React.Fragment key={`${column.accessor}-filter`}>
             {column.filterHTML ? (
               <th
                 scope="col"
-                className={`pb-2 px-3 text-center text-xs ${column.accessor} ${
+                className={`pb-3 px-4 text-center text-xs ${column.accessor} ${
                   column.class || ""
                 } header filter-class`}
               >
